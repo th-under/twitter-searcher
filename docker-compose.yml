@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  create_tweets:
+    build: twitter_tweets/
+    depends_on:
+      - my_mongodb
+    volumes:
+      - ./twitter_tweets/:/app/
+
+  my_mongodb:
+    image: mongo
+    
+    ports:
+      - 27017:27017
+
+  perform_etl:
+    build: ETL/
+    depends_on:
+      - my_mongodb
+      - my_postgres
+    volumes:
+      - ./ETL/:/app/
+    environment:
+      - ETL_INTERVALL=${ETL_INTERVALL}
+
+  my_postgres:
+    image: postgres:12.6
+
+    ports:
+      - 5555:5432
+
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+
+  evaluation:
+    build: evaluation/
+    depends_on:
+      - create_tweets
+      - my_mongodb
+      - perform_etl
+      - my_postgres
+    volumes:
+      - ./evaluation/:/app/
+    environment:
+      - EVAL_INTERVALL=${EVAL_INTERVALL}
+

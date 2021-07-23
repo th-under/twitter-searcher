@@ -1,0 +1,4 @@
+config
+tweepy
+pymongo
+psycopg2-binary
