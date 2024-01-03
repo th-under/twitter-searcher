@@ -11,4 +11,4 @@ API &rarr; MongoDB &rarr; ETL &rarr; PostgrSQL &rarr; output
 * run "docker-composer up" in terminal
 * look at results in evaluation/evaluate.csv
 
-**Remkark:**API no longer functions since the switch to X
+**Remark:** API no longer functions since the switch to X
